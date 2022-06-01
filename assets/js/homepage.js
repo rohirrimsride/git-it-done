@@ -10,6 +10,8 @@ var formSubmitHandler = function(event){
 
     if (username) {
         getUserRepos(username);
+
+        // clear old content
         nameInputEl.value = "";
     } else {
         alert("Please enter a GitHub username");
@@ -23,6 +25,7 @@ var getUserRepos = function(user) {
     // make request to the url
     fetch(apiUrl)
         .then(function(response) {
+            // request was successful
             if (response.ok) {
                 response.json().then(function(data) {
                     displayRepos(data, user);
@@ -60,12 +63,12 @@ var displayRepos = function(repos, searchTerm) {
         var titleEl = document.createElement("span");
         titleEl.textContent = repoName;
 
+        // append to container
+        repoEl.appendChild(titleEl);
+
         // create a status element
         var statusEl = document.createElement("span");
         statusEl.classList = "flex-row align-center";
-
-        // append to container
-        repoEl.appendChild(titleEl);
 
         // check if current repo has issues or not
         if (repos[i].open_issues_count > 0) {
